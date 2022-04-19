@@ -1,57 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <style type="text/css">
-        fieldset {
-				width: 310px;
-				margin-top: 20px;
-				border: 1px solid #d6d6d6;
-				background-color: #ffffff;
-				line-height: 1.6em;}
-        input[type="text"] {
-				width: 120px;
-				border: 1px solid #d6d6d6;
-				padding: 2px;
-				outline: none;}
-			input[type="text"]:focus,
-			input[type="text"]:hover {
-				background-color: #d0e2f0;
-				border: 1px solid #999999;}
-			input[type="submit"] {
-				border: 1px solid #006633;
-				background-color: #009966;
-				color: #ffffff;
-				border-radius: 5px;
-				padding: 5px;
-				margin-top: 10px;}
-			input[type="submit"]:hover {
-				border: 1px solid #006633;
-				background-color: #00CC33;
-				color: #ffffff;
-				cursor: pointer;}
-    </style>
-    <meta charset="UTF-8">
-    <title>Bees</title>
-</head>
-<body>
-    <h1><b>Пчёлы</b></h1>
-    <p>Пчёлы—летающие насекомые подотряда Стебельчатобрюхие, родственные осам и муравьям.</p>
-    <p>Пчела является одним из самых полезных насекомых, живущих на нашей планете.
-        Пчела-труженица не только дарит целебные и уникальные по своему составу продукты,
-        такие как мед, пергу, маточное молочко, прополис, воск, но и опыляет растения,
-        способствуя продолжению жизни на Земле. Пчелиный яд используется в медицине.</p>
-    <p>Пчёлы - общественные насекомые: они живут в большой колонии, которая называется роем.</p>
-    <p>Пчёлы играют важную роль в опылении цветущих растений, являясь самой многочисленной группой
-        опылителей в экосистемах, связанных с цветами. В зависимости от текущей потребности,
-        пчёлы могут сконцентрироваться как на сборе нектара, так и на сборе пыльцы.
-        И в первом, и во втором случае пчёлы способствуют опылению растений,
-        но в случае со сбором пыльцы этот процесс проходит гораздо более эффективно.</p>
-    <p></p>
-    <h2>Спасибо, что почитали про пчёл. Это единственное на что у меня хватило фантазии.</h2>
-    <p></p>
-
-    <p>Дата посещения сайта: {{data}}</p>
-
+{% extends "base.html" %}
+{% block title %}
+	Фитнес Центр "Max Power"
+{% endblock %}
+{% block style %}
+	{% include "style.html" %}
+{% endblock %}
+{% block menu %}
+	{% include "menu.html" %}
+{% endblock %}
+{% block body %}
+	{% include "index_body.html" %}
+{% endblock %}
     <form action="" method="post">
 			<fieldset>
                 <legend><b>Чтобы узнать больше о пчёлах, заполните анкету</b></legend>
