@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-	Фитнес Центр "Max Power"
+Контакты
 {% endblock %}
 {% block style %}
 	{% include "style.html" %}
@@ -9,17 +9,16 @@
 	{% include "menu.html" %}
 {% endblock %}
 {% block body %}
-	{% include "index_body.html" %}
+	<div>
+		<a href="/create_category/">Создать новую категорию тренировок</a>
+	</div>
+	<div>
+		<h1>Список существующих категорий</h1>
+        {% for item in objects_lst %}
+        <li>
+            {{item.name}} <span>Количество тренировок: {{item.trainings_amount()}}</span>
+			<a href="/training_list/?id={{item.id}}">Показать тренировки</a>
+        </li>
+        {% endfor %}
+	</div>
 {% endblock %}
-    <form action="" method="post">
-			<fieldset>
-                <legend><b>Чтобы узнать больше о пчёлах, заполните анкету</b></legend>
-				<p><label class="title" for="name">Ваше имя:</label>
-					 <input type="text" name="name" id="name"><br />
-					 <label class="title" for="email">Ваш email:</label>
-					 <input type="text" name="email" id="email"></p>
-			</fieldset>
- 	    <div class="submit"><input type="submit" value="Регистрация" /></div>
-    </form>
-</body>
-</html>
