@@ -1,1 +1,2 @@
 architectures and templates
+Использовала uwsgi
