@@ -1,5 +1,5 @@
 from datetime import date
-from views import Index, About, Date, Time, Contacts, TrainingPrograms, TrainingList, CreateTraining, CreateCategory, \
+from views import Index, About, Contacts, TrainingPrograms, TrainingList, CreateTraining, CreateCategory, \
     CopyTraining, CategoryList
 
 
@@ -14,16 +14,3 @@ def base_front(request):
 fronts = [secret_front, base_front]
 
 
-routes = {
-    '/': Index(),
-    '/about/': About(),
-    '/contacts/': Contacts(),
-    '/date/': Date(),
-    '/time/': Time(),
-    '/training_programs/': TrainingPrograms(),
-    '/training_list/': TrainingList(),
-    '/category_list/': CategoryList(),
-    '/create_training/': CreateTraining(),
-    '/create_category/': CreateCategory(),
-    '/copy_training/': CopyTraining()
-}

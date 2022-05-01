@@ -52,3 +52,13 @@ class Framework:
             val_decode_str = quopri.decodestring(val).decode('UTF-8')
             info[key] = val_decode_str
         return info
+
+
+class FakeApplication(Framework):
+    def __init__(self, routes_objects, fronts_objects):
+        self.application = Framework(routes_objects, fronts_objects)
+        super.__init__(routes_objects, fronts_objects)
+
+    def __call__(self, env, start_response):
+        start_response('200 OK', [('Content-Type', 'text/html')])
+        return [b'Hello From Fake']

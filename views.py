@@ -2,47 +2,51 @@ import time
 from datetime import datetime, date
 
 from bee_framework.templator import render
-from patterns.patterns import Engine, Logger
+from patterns.create_patterns import Engine, Logger
+from patterns.structure_patterns import Route, Debug
 
 site = Engine()
 logger = Logger('main')
+routes = {}
 
+
+@Route(routes=routes, url='/')
 class Index:
+    @Debug(name='Index')
     def __call__(self, request):
         return '200 OK', render('index.html', data=request.get('data', None))
 
 
+@Route(routes=routes, url='/contacts/')
 class Contacts:
+    @Debug(name='Contacts')
     def __call__(self, request):
         return '200 OK', render('contacts.html', data=request.get('data', None))
 
 
+@Route(routes=routes, url='/about/')
 class About:
+    @Debug(name='About')
     def __call__(self, request):
         return '200 OK', 'Bee Framework'
 
 
-class Time:
-    def __call__(self, request):
-        return '200 OK', f'{datetime.now().time()}'
-
-
-class Date:
-    def __call__(self, request):
-        return '200 OK', f'{datetime.now().date()}'
-
-
+@Route(routes=routes, url='/training_programs/')
 class TrainingPrograms:
+    @Debug(name='TrainingPrograms')
     def __call__(self, request):
         return '200 OK', render('training_programs.html', data=date.today())
 
 
 class Error404:
+    @Debug(name='Error404')
     def __call__(self, request):
         return '404 WHAT', '404 Page Not Found'
 
 
+@Route(routes=routes, url='/training_list/')
 class TrainingList:
+    @Debug(name='TrainingList')
     def __call__(self, request):
         logger.logger('Список тренеровок')
         try:
@@ -52,9 +56,11 @@ class TrainingList:
             return '200 OK', 'Тренировки ещё не были добавлены'
 
 
+@Route(routes=routes, url='/create_training/')
 class CreateTraining:
     category_id = -1
 
+    @Debug(name='CreateTraining')
     def __call__(self, request):
         if request['method'] == 'POST':
             data = request['data']
@@ -76,7 +82,9 @@ class CreateTraining:
                 return '200 OK', 'Категории ещё не были добавлены'
 
 
+@Route(routes=routes, url='/create_category/')
 class CreateCategory:
+    @Debug(name='CreateCategory')
     def __call__(self, request):
         if request['method'] == 'POST':
             print(request)
@@ -97,13 +105,17 @@ class CreateCategory:
             return '200 OK', render('create_category.html', categories=categories)
 
 
+@Route(routes=routes, url='/category_list/')
 class CategoryList:
+    @Debug(name='CategoryList')
     def __call__(self, request):
         logger.logger('Список категорий')
         return '200 OK', render('category_list.html', objects_lst=site.categories)
 
 
+@Route(routes=routes, url='/copy_training/')
 class CopyTraining:
+    @Debug(name='CopyTraining')
     def __call__(self, request):
         request_params = request['request_params']
         try:
