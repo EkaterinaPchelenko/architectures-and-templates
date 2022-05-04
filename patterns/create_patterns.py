@@ -1,6 +1,8 @@
 import copy
 import quopri
 
+from patterns.behavior_patterns import Subject
+
 
 class User:
     pass
@@ -11,7 +13,9 @@ class Trainer(User):
 
 
 class SimpleUser(User):
-    pass
+    def __init__(self, name):
+        self.trainings = []
+        super().__init__(name)
 
 
 class UsFactory:
@@ -31,12 +35,22 @@ class TrainingPrortotype:
         return copy.deepcopy(self)
 
 
-class Training(TrainingPrortotype):
+class Training(TrainingPrortotype, Subject):
 
     def __init__(self, name, category):
         self.name = name
         self.category = category
         self.category.trainings.append(self)
+        self.users = []
+        super().__init__()
+
+    def __getitem__(self, item):
+        return self.users[item]
+
+    def add_user(self, user: SimpleUser):
+        self.users.append(user)
+        user.trainings.append(self)
+        self.notification()
 
 
 class RealTraining(Training):
@@ -83,8 +97,8 @@ class Engine:
         self.categories = []
 
     @staticmethod
-    def create_user(type_):
-        return UsFactory.create(type_)
+    def create_user(type_, name):
+        return UsFactory.create(type_, name)
 
     @staticmethod
     def create_category(name, category=None):
@@ -106,6 +120,11 @@ class Engine:
             if training.name == name:
                 return training
         return None
+
+    def get_user(self, name) -> SimpleUser:
+        for user in self.simple_users:
+            if user.name == name:
+                return user
 
     @staticmethod
     def decode_value(value):

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-Контакты
+Главная
 {% endblock %}
 {% block style %}
 	{% include "style.html" %}
@@ -20,5 +20,16 @@
 			<a href="/training_list/?id={{item.id}}">Показать тренировки</a>
         </li>
         {% endfor %}
+	</div>
+	<div>
+		<li>
+			<a href="/user_list/">Список пользователей</a>
+		</li>
+		<li>
+			<a href="/create_user/">Создать пользователя</a>
+		</li>
+		<li>
+			<a href="/add_user/">Записать пользователя на тренировку</a>
+		</li>
 	</div>
 {% endblock %}
