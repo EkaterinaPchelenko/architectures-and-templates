@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}
+Контакты
+{% endblock %}
+{% block style %}
+	{% include "style.html" %}
+{% endblock %}
+{% block menu %}
+	{% include "menu.html" %}
+{% endblock %}
+{% block body %}
+    <div>
+        <a href="/">На главную</a>
+    </div>
+
+    <br>
+    <br>
+
+    <div>
+        <a href="/create_training/?id={{id}}">Создать новую тренировку</a>
+        <br>
+        <h1>Список тренировок для категории "{{name}}"</h1>
+        {% for item in objects_lst %}
+        <li>
+            {{item.name}} <span><a href="/copy_training/?name={{item.name}}">скопировать</a></span>
+        </li>
+        {% endfor %}
+    </div>
+{% endblock %}

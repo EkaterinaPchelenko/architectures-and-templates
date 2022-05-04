@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}
+Главная
+{% endblock %}
+{% block style %}
+	{% include "style.html" %}
+{% endblock %}
+{% block menu %}
+	{% include "menu.html" %}
+{% endblock %}
+{% block body %}
+	<div>
+		<a href="/create_category/">Создать новую категорию тренировок</a>
+	</div>
+	<div>
+		<h1>Список существующих категорий</h1>
+        {% for item in objects_lst %}
+        <li>
+            {{item.name}} <span>Количество тренировок: {{item.trainings_amount()}}</span>
+			<a href="/training_list/?id={{item.id}}">Показать тренировки</a>
+        </li>
+        {% endfor %}
+	</div>
+	<div>
+		<li>
+			<a href="/user_list/">Список пользователей</a>
+		</li>
+		<li>
+			<a href="/create_user/">Создать пользователя</a>
+		</li>
+		<li>
+			<a href="/add_user/">Записать пользователя на тренировку</a>
+		</li>
+	</div>
+{% endblock %}
