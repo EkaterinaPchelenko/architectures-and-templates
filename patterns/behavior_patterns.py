@@ -69,6 +69,12 @@ class FileWriter:
             file.write(f'{text}\n')
 
 
+class ConsoleWriter:
+
+    def write(self, text):
+        print(text)
+
+
 class Observer:
     def update(self, subj):
         pass

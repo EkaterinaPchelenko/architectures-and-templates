@@ -2,13 +2,18 @@ import time
 from datetime import datetime, date
 
 from bee_framework.templator import render
-from patterns.behavior_patterns import ListView, CreateView, BaseSerializer
-from patterns.create_patterns import Engine, Logger
+from patterns.arch_pattern_unit_of_work import UnitOfWork
+from patterns.behavior_patterns import ListView, CreateView, BaseSerializer, SMSNotifier, EmailNotifier
+from patterns.create_patterns import Engine, Logger, MapperRegistry
 from patterns.structure_patterns import Route, Debug
 
 site = Engine()
 logger = Logger('main')
 routes = {}
+email_notifier = EmailNotifier()
+sms_notifier = SMSNotifier()
+UnitOfWork.new_current()
+UnitOfWork.get_current().set_mapper_registry(MapperRegistry)
 
 
 @Route(routes=routes, url='/')
@@ -72,6 +77,8 @@ class CreateTraining:
             if self.category_id != -1:
                 category = site.find_category(int(self.category_id))
                 training = site.create_training('video_training', name, category)
+                training.observers.append(email_notifier)
+                training.observers.append(sms_notifier)
                 site.trainings.append(training)
             return '200 OK', render('training_list.html', object_lst=category.trainings, name=category.name, id=category.id)
         else:
@@ -135,8 +142,11 @@ class CopyTraining:
 
 @Route(routes=routes, url='/user_list/')
 class UserListView(ListView):
-    queryset = site.simple_users
     template_name = 'user_list.html'
+
+    def get_queryset(self):
+        mapper = MapperRegistry.get_current_mapper('user')
+        return mapper.all()
 
 
 @Route(routes=routes, url='/create_user/')
@@ -148,6 +158,8 @@ class UserCreateView(CreateView):
         name = site.decode_value(name)
         new_object = site.create_user('user', name)
         site.simple_users.append(new_object)
+        new_object.mark_new()
+        UnitOfWork.get_current().commit()
 
 
 @Route(routes=routes, url='/add_user/')

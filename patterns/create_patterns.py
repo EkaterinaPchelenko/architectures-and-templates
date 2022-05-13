@@ -1,7 +1,10 @@
 import copy
 import quopri
-
-from patterns.behavior_patterns import Subject
+from behavior_patterns import ConsoleWriter, Subject
+from arch_pattern_unit_of_work import DomainObj
+from arch_pattern_mapper import UserMapper
+import sqlite3
+import threading
 
 
 class User:
@@ -162,6 +165,22 @@ class Logger(metaclass=Singleton):
         print('LOG--->', text)
 
 
+connection = sqlite3.connect('patterns.sqlite')
+
+
+class MapperRegistry:
+    mappers = {
+        'user': UserMapper,
+    }
+
+    @staticmethod
+    def get_mapper(obj):
+        if isinstance(obj, SimpleUser):
+            return UserMapper(connection)
+
+    @staticmethod
+    def get_current_mapper(name):
+        return MapperRegistry.mappers[name](connection)
 
 
 
