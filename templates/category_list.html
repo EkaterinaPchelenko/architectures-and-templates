@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}
+Контакты
+{% endblock %}
+{% block style %}
+	{% include "style.html" %}
+{% endblock %}
+{% block menu %}
+	{% include "menu.html" %}
+{% endblock %}
+{% block body %}
+	<a href="/">назад</a>
+
+    <h1>Список категорий</h1>
+    <ul>
+
+        {% for item in objects_list %}
+        <li>
+            {{item.name}} <span>Количество Тренировок: {{item.trainings_amount()}}</span>
+        </li>
+        {% endfor %}
+    </ul>
+
+	<div>
+		<li><a href="/trainings_list/">Список тренировок</a></li>
+		<li><a href="/create_training/">Создать курс</a></li>
+	</div>
+{% endblock %}
